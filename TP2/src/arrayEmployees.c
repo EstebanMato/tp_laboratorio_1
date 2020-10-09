@@ -119,14 +119,18 @@ int searchFree(Employee* list, int len)
 {
 	int retorno = -1;
 
-	for(int i=0; i<len; i++)
+	if(list != NULL)
 	{
-		if(list[i].isEmpty==1)
-		{
-			retorno=i;
-			break;
-		}
+		for(int i=0; i<len; i++)
+			{
+				if(list[i].isEmpty==1)
+				{
+					retorno=i;
+					break;
+				}
+			}
 	}
+
 	return retorno;
 }
 
@@ -347,60 +351,95 @@ void modifyEmployee(Employee* list, int len)
 }
 
 
-void sortEmployees(Employee* list, int len, int order)
+int sortEmployees(Employee* list, int len, int order)
 {
-
+	int retorno=-1;
+	int flagSwap;
+	int i;
 	Employee auxEmployee;
 
-	if(order==1)
+	if(list != NULL && len > 0)
 	{
-		for(int i=0;i<len-1;i++)
+		if(order == 1)
 		{
-			for(int j=i+1;j<len;j++)
+			retorno=0;
+			do
 			{
-				if(list[i].sector>list[j].sector)
+				flagSwap=0;
+				for(i=0; i<len; i++)
 				{
-					auxEmployee=list[i];
-					list[i]=list[j];
-					list[j]=auxEmployee;
-				}
-				if(strcmp(list[i].lastName, list[j].lastName )>0 )
-				{
-					auxEmployee=list[i];
-					list[i]=list[j];
-					list[j]=auxEmployee;
-				}
+					if(list[i].isEmpty || list[i+1].isEmpty)
+					{
+						continue;
+					}
 
+					if(strcmp(list[i].name, list[i+1].name) > 0)
+					{
+						flagSwap = 1;
+						auxEmployee=list[i];
+						list[i]=list[i+1];
+						list[i+1]=auxEmployee;
+					}
+					else
+					{
+						if(strcmp(list[i].name, list[i+1].name) == 0)
+						{
+							if(list[i].sector > list[i+1].sector)
+							{
+								flagSwap = 1;
+								auxEmployee=list[i];
+								list[i]=list[i+1];
+								list[i+1]=auxEmployee;
+							}
+						}
+					}
+				}
+				len--;
+			}while(flagSwap);
+		}
+		else
+		{
+			if(order == 2)
+			{
+				retorno=0;
+				do
+				{
+					flagSwap=0;
+					for(i=0; i<len; i++)
+					{
+						if(list[i].isEmpty || list[i+1].isEmpty)
+						{
+							continue;
+						}
+
+						if(strcmp(list[i].name, list[i+1].name) < 0)
+						{
+							flagSwap = 1;
+							auxEmployee=list[i];
+							list[i]=list[i+1];
+							list[i+1]=auxEmployee;
+						}
+						else
+						{
+							if(strcmp(list[i].name, list[i+1].name) == 0)
+							{
+								if(list[i].sector < list[i+1].sector)
+								{
+									flagSwap = 1;
+									auxEmployee=list[i];
+									list[i]=list[i+1];
+									list[i+1]=auxEmployee;
+								}
+							}
+						}
+					}
+					len--;
+				}while(flagSwap);
 			}
 		}
 	}
-	else
-	{
-		if(order==2)
-		{
-			for(int i=0;i<len-1;i++)
-			{
-				for(int j=i+1;j<len;j++)
-				{
-					if(list[i].sector<list[j].sector)
-					{
-						auxEmployee=list[i];
-						list[i]=list[j];
-						list[j]=auxEmployee;
-					}
-					if(strcmp(list[i].lastName, list[j].lastName )<0 )
-					{
-						auxEmployee=list[i];
-						list[i]=list[j];
-						list[j]=auxEmployee;
-					}
-
-				}
-			}
-		}
-	}
+	return retorno;
 }
-
 
 int hardcodearEmpleados(Employee* list, int len, int cantidad)
 {
@@ -413,9 +452,9 @@ int hardcodearEmpleados(Employee* list, int len, int cantidad)
 								   {1001,"Gonzalo","Montiel",    300.50,6,0},
 								   {1002,"Ignacio","Fernandez",  100.95,13,0},
 								   {1003,"JuanFer","Quinteros",  250.20,9,0},
-								   {1004,"Rafael Santos","Borre",103.20,9,0},
+								   {1004,"Franco","Armani",      250.20,5,0},
 								   {1005,"Juan","De La Cruz",    250.150,7,0},
-								   {1006,"Lucas","Pratto",       250.20,6,0},
+								   {1006,"Franco","Armani",      250.20,1,0},
 								   {1007,"Marcelo","Gallardo",   250.99,1,0},
 								   {1008,"Enzo","Perez",         250.20,5,0},
 								   {1009,"Milton","Caso",        10000.380,5,0} };

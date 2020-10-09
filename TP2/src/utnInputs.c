@@ -52,8 +52,15 @@ void menuInformes(Employee* list, int len){
 		__fpurge(stdin);
 		scanf("%d", &order);
 
-		sortEmployees(list, len, order);
-		printEmployees(list, len);
+		if(sortEmployees(list, len, order)==0)
+		{
+			printEmployees(list, len);
+		}
+		else
+		{
+			printf("\nERROR al ordernar los empleados u opcion invalida");
+		}
+
     	break;
 
     case 2:
@@ -279,25 +286,28 @@ int isFloatNumber(char* string, int len)
 {
 	int retorno=-1;//ERROR
 	int i=0;
+	int contadorPuntos=0;
 
 	if(string != NULL && len >0)
 	{
 		for(i=0; i<len && string[i] != '\0'; i++)
 		{
-			retorno= 0;//VERDADERO
-
+			retorno=0;//VERDADERO
 			if( i==0 && (string[i] == '+' || string[i] == '-'))
-			{
-				continue;
-			}
-			if(string[i]=='.' )
 			{
 				continue;
 			}
 			if(string[i]> '9' || string[i] < '0')
 			{
-				retorno=-1;
-				break;
+				if(string[i] == '.' && contadorPuntos == 0)
+				{
+					contadorPuntos++;
+				}
+				else
+				{
+					retorno =-1;//ERROR
+					break;
+				}
 			}
 			//CONTINUE
 		}
