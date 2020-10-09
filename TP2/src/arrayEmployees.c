@@ -85,10 +85,10 @@ int highEmployee(Employee* list, int len, int id)
 	{
 		system("clear");
 		printf("\n***Alta de empleado***\n");
-		todoOk=utn_getString(name, "\nIngrese el nombre: ", "\nERROR. (max 10 caracteres): ", sizeof(name), 4);
+		todoOk=utn_getString(name, "\nIngrese el nombre: ", "\nERROR. (max 50 caracteres): ", sizeof(name), 4);
 		if(todoOk==0)
 		{
-			todoOk=utn_getString(lastName, "\nIngrese el apellido: ", "\nERROR. (max 10 caracteres): ", sizeof(lastName), 4);
+			todoOk=utn_getString(lastName, "\nIngrese el apellido: ", "\nERROR. (max 50 caracteres): ", sizeof(lastName), 4);
 			if(todoOk==0)
 			{
 				todoOk=utn_getFloat(&salary, "\nIngrese el salario: ", "\nERROR. (Rango entre 1 - 100000): ", 1, 100000, 4);
